@@ -1,5 +1,5 @@
 # Antigravity Tools 🚀
-> 专业的 AI 账号管理与协议反代系统 (v3.3.40)
+> 专业的 AI 账号管理与协议反代系统 (v3.3.41)
 <div align="center">
   <img src="public/icon.png" alt="Antigravity Logo" width="120" height="120" style="border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
 
@@ -8,7 +8,7 @@
   
   <p>
     <a href="https://github.com/lbjlaq/Antigravity-Manager">
-      <img src="https://img.shields.io/badge/Version-3.3.40-blue?style=flat-square" alt="Version">
+      <img src="https://img.shields.io/badge/Version-3.3.41-blue?style=flat-square" alt="Version">
     </a>
     <img src="https://img.shields.io/badge/Tauri-v2-orange?style=flat-square" alt="Tauri">
     <img src="https://img.shields.io/badge/Backend-Rust-red?style=flat-square" alt="Rust">
@@ -205,6 +205,12 @@ print(response.choices[0].message.content)
 ## 📝 开发者与社区
 
 *   **版本演进 (Changelog)**:
+    *   **v3.3.41 (2026-01-18)**:
+        - **Claude 协议核心兼容性修复 (Issue #813)**:
+            - **连续 User 消息合并**: 实现了 `merge_consecutive_messages` 逻辑，在请求进入 Proxy 时自动合并具有相同角色的连续消息流。彻底解决了因 Spec/Plan 模式切换导致的角色交替违规产生的 400 Bad Request 错误。
+            - **EnterPlanMode 协议对齐**: 针对 Claude Code 的 `EnterPlanMode` 工具调用，强制清空冗余参数，确保完全符合官方协议，解决了激活 Plan Mode 时的指令集校验失败问题。
+        - **代理鲁棒性增强**:
+            - 增强了工具调用链的自愈能力。当模型因幻觉产生错误路径尝试时，Proxy 现能提供标准的错误反馈引导模型转向正确路径。
     *   **v3.3.40 (2026-01-18)**:
         - **API 400 错误深度修复 (Grep/Thinking 稳定性改进)**:
             - **修复流式块顺序违规**: 彻底解决了 "Found 'text' instead of 'thinking'" 400 错误。修正了 `streaming.rs` 中在文字块后非法追加思维块的逻辑，改由缓存机制实现静默同步。
